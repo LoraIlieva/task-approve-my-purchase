@@ -1,15 +1,13 @@
 package handlers;
 
 import common.Type;
+import java.security.InvalidParameterException;
 
-/**
- * //TODO - If needed, validate logic and if possible optimize code.
- */
 public class Director extends Approver {
 
     @Override
     public void approve(int id, double cost, Type type) {
-        if (canApprove(id, cost, type)) {
+        if (canApprove(cost, type)) {
             System.out.println("Director approved purchase with id " + id + " that costs " + cost);
             return;
         }
@@ -19,49 +17,14 @@ public class Director extends Approver {
     }
 
     @Override
-    protected boolean canApprove(int id, double cost, Type type) {
-        boolean result = false;
-
-        switch (type) {
-            case CONSUMABLES:
-                if (cost < 500) {
-                    result = true;
-                    return result;
-                } else {
-                    break;
-                }
-            case CLERICAL:
-                if (cost < 1000) {
-                    result = true;
-                    return result;
-                } else {
-                    break;
-                }
-            case GADGETS:
-                if (cost < 1500) {
-                    result = true;
-                    return result;
-                } else {
-                    break;
-                }
-            case GAMING:
-                if (cost < 3000) {
-                    result = true;
-                    return result;
-                } else {
-                    break;
-                }
-            case PC:
-                if (cost < 6000) {
-                    result = true;
-                    return result;
-                } else {
-                    break;
-                }
-            default:
-                result = false;
-                return result;
-        }
-        return result;
+    protected boolean canApprove(double cost, Type type) {
+        if(cost <= 0) throw new InvalidParameterException();
+        return switch (type) {
+            case CONSUMABLES -> cost <= 500;
+            case CLERICAL -> cost <= 1000;
+            case GADGETS -> cost <= 1500;
+            case GAMING -> cost <= 3500;
+            case PC -> cost <= 6000;
+        };
     }
 }
