@@ -5,7 +5,6 @@ import common.Type;
 /**
  * Used as a fallback in approval chain.
  * Should not contain any additional logic.
- * If abstract methods are changed, be free to edit signatures.
  */
 public class ExecutiveMeeting extends Approver {
     private static final ExecutiveMeeting INSTANCE = new ExecutiveMeeting();
@@ -21,7 +20,7 @@ public class ExecutiveMeeting extends Approver {
     }
 
     @Override
-    protected boolean canApprove(int id, double cost, Type type) {
+    protected boolean canApprove(double cost, Type type) {
         return false;
     }
 }
